@@ -1,0 +1,84 @@
+---
+title: "Learning Rmarkdown"
+author: "Edmond Kwan"
+date: "2020-11-16"
+output:
+  html_document:
+    toc: True
+    toc_depth: 2
+    theme: readable
+    code_folding: "hide"
+
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,
+                      message = FALSE,
+                      warning = FALSE)
+
+library(magrittr)
+library(dplyr)
+library(DT)
+library(ggplot2)
+```
+
+
+# Introduction
+
+> outcomes:
+
+- Learn how to creat and share Rmarkdown document
+- Learn various document types, e.g. html, pdf and docx
+- ~~Learn to fly the rocket!~~
+
+The bottom line is - I would like to learn Rmarkdown!
+<br>
+Like **seriously** become **good** at it !  
+Like **seriously** become **good** at it !  
+
+## Task list for today
+
+- [X] Get aspired to learn Rmarkdown
+- [ ] Get to know three core components of the Rmarkdown document (header, body, R chunks)
+- [ ] Practice, practice, practice!  
+
+## Code
+
+```{r examine_packages}
+library(magrittr)
+
+avail_packages <- available.packages(contriburl = contrib.url("https://mirror.aarnet.edu.au/pub/CRAN/"))
+
+#head(avail_packages)
+```
+
+### Getting and wrangling the data
+
+
+```{r get_data, echo=FALSE}
+
+library(magrittr)
+library(dplyr)
+
+avail_packages <- available.packages(contriburl = contrib.url("https://mirror.aarnet.edu.au/pub/CRAN/")) %>% 
+                    as.data.frame() %>% 
+                    as_tibble() %>% 
+                    rowwise() %>% 
+                    mutate(Depend = length(unlist(strsplit(Imports, split = ",")))) %>% 
+                    ungroup() %>% 
+                    select(Package, Version, Depend, Imports, License)
+```
+
+
+```{r make_table, message=FALSE, warning=FALSE}
+library(DT)
+avail_packages %>% datatable(escape = FALSE)
+```
+
+
+## Plot the data
+
+```{r plot}
+library(ggplot2)
+avail_packages %>% ggplot(aes(Depend)) + geom_bar()
+```
+
