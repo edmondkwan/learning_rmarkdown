@@ -6,7 +6,7 @@ output:
   html_document:
     toc: True
     toc_depth: 2
-    theme: readable
+    theme: sandstone
     code_folding: "hide"
 
 ---
